@@ -3,15 +3,10 @@
     <v-flex xs6 offset-xs3>
       <div class="white elevation-2">
         <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
-
-        <div class="pl-4 pr-4 pt-2 pb-2">
-          <form name="register-form" autocomplete="off">
-            <v-text-field
-              label="Name"
-              v-model="name"/>
-            <br>
+        <form name="login-form" autocomplete="off">
+          <div class="pl-4 pr-4 pt-2 pb-2">
             <v-text-field
               label="Email"
               v-model="email"/>
@@ -27,9 +22,9 @@
             ></v-text-field>
             <br>
             <div class="error-message">{{ error }}</div>
-            <v-btn class="cyan" @click="register">Register</v-btn>
-          </form>
-        </div>
+            <v-btn class="cyan" @click="login">Login</v-btn>
+          </div>
+        </form>
       </div>
     </v-flex>
   </v-layout>
@@ -47,15 +42,16 @@
       }
     },
     methods: {
-      async register () {
+      async login () {
         try {
-          await UserService.register({
-            nombre: this.name,
+          this.error = null
+          await UserService.login({
             email: this.email,
             clave: this.password
           })
+
+          this.$router.push({ name: 'advertisements' })
         } catch (error) {
-          console.error('Error en register', error)
           this.error = error.response.data.error
         }
       }
@@ -67,3 +63,4 @@
 <style scoped>
 
 </style>
+
