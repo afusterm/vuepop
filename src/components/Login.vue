@@ -45,11 +45,12 @@
       async login () {
         try {
           this.error = null
-          await UserService.login({
+          const response = await UserService.login({
             email: this.email,
             clave: this.password
           })
 
+          this.$store.dispatch('setToken', response.data.token)
           this.$router.push({ name: 'advertisements' })
         } catch (error) {
           this.error = error.response.data.error
