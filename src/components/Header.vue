@@ -1,26 +1,28 @@
 <template>
-    <v-toolbar fixed class="cyan" dark>
-        <v-toolbar-title class="mr-4">
+  <v-toolbar fixed class="cyan" dark>
+    <v-toolbar-title class="mr-4">
       <span
-      class="home"
-      @click="navigateTo({ name: 'root' })">
-        Vuepop
+        class="home"
+        @click="navigateTo({ name: 'root' })">
+          Vuepop
       </span>
-        </v-toolbar-title>
+    </v-toolbar-title>
 
-        <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
 
-        <v-toolbar-items>
-        	<v-btn v-if="!this.$store.state.isUserLoggedIn" flat dark @click="navigateTo({ name: 'login' })">Login</v-btn>
-        </v-toolbar-items>
+    <v-toolbar-items>
+      <v-btn v-if="!this.$store.state.isUserLoggedIn" flat dark @click="navigateTo({ name: 'login' })">Login</v-btn>
+    </v-toolbar-items>
 
-        <v-toolbar-items>
-        	<v-btn v-if="!this.$store.state.isUserLoggedIn" flat dark @click="navigateTo({ name: 'register' })">Sign Up</v-btn>
-        </v-toolbar-items>
-	<v-toolbar-items>
-	
-	</v-toolbar-items>
-    </v-toolbar>
+    <v-toolbar-items>
+      <v-btn v-if="!this.$store.state.isUserLoggedIn" flat dark @click="navigateTo({ name: 'register' })">Sign Up</v-btn>
+    </v-toolbar-items>
+
+    <v-toolbar-items>
+      <v-btn v-if="this.$store.state.isUserLoggedIn" flat dark @click="logout">Logout</v-btn>
+    </v-toolbar-items>
+
+  </v-toolbar>
 </template>
 
 <script>
@@ -28,6 +30,13 @@
     methods: {
       navigateTo (route) {
         this.$router.push(route)
+      },
+
+      logout () {
+        this.$store.dispatch('setToken', null)
+        this.$router.push({
+          name: 'root'
+        })
       }
     }
   }
